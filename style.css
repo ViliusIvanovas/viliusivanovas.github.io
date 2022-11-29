@@ -61,8 +61,8 @@ h1{
     margin: 0;
     padding: 0;
     overflow: hidden;
-    border: 1px solid blue;
-    background-color: darkblue;
+    border: 1px solid lightseagreen;
+    background-color: limegreen;
   }
   
   li {
@@ -78,11 +78,11 @@ h1{
   }
   
   li a:hover:not(.active) {
-    background-color: #ddd;
+    background-color: lime;
   }
   
   li a.active {
     color: white;
-    background-color: #04AA6D;
+    background-color: darkgreen;
   }
 
