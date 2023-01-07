@@ -73,8 +73,11 @@ jobs:
       with:
         dotnet-version: 6.0.x
         
+    # sets up .NET Core SDK 3.1
     - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v3.0.3
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
 
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe
