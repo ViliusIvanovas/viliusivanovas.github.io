@@ -1,28 +1,32 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+name: Deploy to GitHub Pages
 
-name: .NET
-
+# Run workflow on every push to the master branch
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
-  build:
-
+  deploy-to-github-pages:
+    # use ubuntu-latest image to run steps on
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+
+    # uses GitHub's checkout action to checkout code form the master branch
+    - uses: actions/checkout@v2
+
+      # sets up .NET Core SDK 6.0.x
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+
+      # publishes Blazor project to the release-folder
+    - name: Publish .NET Core Project
+      run: dotnet publish BlazorGitHubPagesDemo.csproj -c Release -o release --nologo
+
+    - name: Commit wwwroot to GitHub Pages
+    uses: JamesIves/github-pages-deploy-action@3.7.1
+    with:
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       BRANCH: gh-pages
+       FOLDER: release/wwwroot
